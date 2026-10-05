@@ -8,32 +8,13 @@
   <script>
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxfwr56PaFqyYRygCRSGvw-8d1ePBDDlZoCEU4Tct5zdYHtMeI5CKY0trK_bftLdpa5/exec";
 
-    // 1. ตรวจสอบว่าเป็น iOS (iPhone/iPad) หรือไม่ -> ถ้าใช่ ให้ Redirect ทันที
+    // ตรวจสอบว่าเป็น iOS (iPhone/iPad) หรือไม่ -> ถ้าใช่ให้ Redirect ทันที
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
       window.location.href = webAppUrl;
     }
-
-    // 2. ตั้งตัวจับเวลาสำหรับกรณีติด 401 หรือ iframe โหลดไม่ผ่าน (Fallback Redirect)
-    // หากผ่านไป 2.5 วินาทีแล้ว iframe ยังไม่ส่งสัญญาณว่าโหลดสำเร็จ (เช่น ติด 401 หรือโดนบล็อก Cookie) 
-    // ระบบจะ Redirect พาผู้ใช้ไปยัง Web App ตรงๆ ทันที
-    let isAppLoaded = false;
-    
-    const fallbackTimer = setTimeout(function() {
-      if (!isAppLoaded) {
-        window.location.href = webAppUrl;
-      }
-    }, 1500);
-
-    // รับสัญญาณตอบกลับเมื่อ Google Apps Script โหลดสำเร็จจริง
-    window.addEventListener("message", function(event) {
-      if (event.data === "GAS_LOADED") {
-        isAppLoaded = true;
-        clearTimeout(fallbackTimer);
-      }
-    });
   </script>
 
   <style>
@@ -54,7 +35,7 @@
 </head>
 <body>
 
-  <!-- ฝัง Web App ผ่าน iframe -->
+  <!-- ฝัง Web App ผ่าน iframe (นิ่ง 100% สำหรับ Windows/PC) -->
   <iframe src="https://script.google.com/macros/s/AKfycbxfwr56PaFqyYRygCRSGvw-8d1ePBDDlZoCEU4Tct5zdYHtMeI5CKY0trK_bftLdpa5/exec"></iframe>
 
 </body>
