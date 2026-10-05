@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leave Request</title>
+  
+  <script>
+    // URL ของ Google Apps Script Web App
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxfwr56PaFqyYRygCRSGvw-8d1ePBDDlZoCEU4Tct5zdYHtMeI5CKY0trK_bftLdpa5/exec";
+
+    // ตรวจสอบว่าเป็น iPhone, iPad หรือ iPod (iOS) หรือไม่
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    // ถ้าเข้าผ่าน iPhone / iOS ให้เปิดเด้งไปยัง Web App ตรงๆ เพื่อหลบปัญหาการบล็อก Cookie ใน iframe ของ Safari
+    if (isIOS) {
+      window.location.href = webAppUrl;
+    }
+  </script>
+
   <style>
     /* ตั้งค่าให้ iframe แสดงผลเต็มจอพอดีกับหน้าเว็บ */
     html, body {
@@ -22,7 +37,7 @@
 </head>
 <body>
 
-  <!-- ฝัง Web App ผ่าน iframe -->
+  <!-- ฝัง Web App ผ่าน iframe (สำหรับ Android และ PC) -->
   <iframe src="https://script.google.com/macros/s/AKfycbxfwr56PaFqyYRygCRSGvw-8d1ePBDDlZoCEU4Tct5zdYHtMeI5CKY0trK_bftLdpa5/exec"></iframe>
 
 </body>
